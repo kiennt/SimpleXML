@@ -2,6 +2,7 @@
 #include <assert.h>
 #include "simple_vector.h"
 
+// validate vector is not NULL
 static void vector_validated(Vector *v) {
   assert(v != NULL && "vector is NULL");
 }
@@ -59,8 +60,15 @@ int vector_push_back(Vector *v, void* elem) {
 }
 
 // Remove last element of vector `v`
-void vector_pop_back(Vector *v) { 
-  vector_remove_element_at_index(v, v->_size - 1);
+void* vector_pop_back(Vector *v) { 
+  return vector_remove_element_at_index(v, v->_size - 1);
+}
+
+// Return the last element of vector `v`
+void* vector_top_back(Vector *v) {
+  if (v->_size == 0)
+    return NULL;
+  return vector_get_element_at(v, vector_size(v) - 1);
 }
 
 // Add new element `elem` at begin of vector `v`
@@ -71,10 +79,16 @@ int vector_push_front(Vector *v, void* elem) {
 }
 
 // Remove first element of vector `v`
-void vector_pop_front(Vector *v) { 
-  vector_remove_element_at_index(v, 0);
+void* vector_pop_front(Vector *v) { 
+  return vector_remove_element_at_index(v, 0);
 }
 
+// Return the first element of vector `v`
+void* vector_top_front(Vector *v) {
+  if (v->_size == 0)
+    return NULL;
+  return vector_get_element_at(v, 0);
+}
 
 // Add new element `elem` before `index`
 // Example:
@@ -95,7 +109,7 @@ int vector_insert_at_index(Vector *v, void* elem, int index) {
   int i;
   // re-allocate vector if needed
   if (v->_size == v->_capacity) {
-    v->_capacity >>= 1;
+    v->_capacity = v->_capacity * 2;
     void** old_data = v->_data;
     v->_data = calloc(v->_capacity, sizeof(void*));
     for (i = 0; i < v->_size; ++i)

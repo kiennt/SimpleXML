@@ -1,5 +1,5 @@
-#ifndef SIMPLE_XML_H_
-#define SIMPLE_XML_H_
+#ifndef SIMPLE_VECTOR_H_
+#define SIMPLE_VECTOR_H_
 
 typedef struct Vector {
   int _capacity;
@@ -37,17 +37,22 @@ void* vector_get_element_at(Vector *v, int index);
 //        0 if have any errors (like cannot new allocate)
 int vector_push_back(Vector *v, void* elem);
 
-// Remove last element of vector `v`
-void vector_pop_back(Vector *v);
+// Remove and return last element of vector `v`
+void* vector_pop_back(Vector *v);
+
+// Return last element of vector `v`
+void* vector_top_back(Vector *v);
 
 // Add new element `elem` at begin of vector `v`
 // Return 1 if push sucessfull
 //        0 if have any errors (like cannot new allocate)
 int vector_push_front(Vector *v, void* elem);
 
-// Remove first element of vector `v`
-void vector_pop_front(Vector *v);
+// Remove and return first element of vector `v`
+void* vector_pop_front(Vector *v);
 
+// Return first element of vector `v`
+void* vector_top_front(Vector *v);
 
 // Add new element `elem` before `index`
 // Example:
